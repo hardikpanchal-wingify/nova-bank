@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Nova Bank — Dark luxury fintech */
+    --background: 228 60% 8%;          /* #0A0F1E */
+    --foreground: 224 100% 97%;        /* #F0F4FF */
+
+    --card: 228 45% 10%;              /* #0F1629 */
+    --card-foreground: 224 100% 97%;
+
+    --popover: 228 45% 10%;
+    --popover-foreground: 224 100% 97%;
+
+    --primary: 163 100% 42%;           /* #00D4AA — electric teal */
+    --primary-foreground: 228 60% 8%;
+
+    --secondary: 228 30% 16%;
+    --secondary-foreground: 224 100% 97%;
+
+    --muted: 228 25% 14%;
+    --muted-foreground: 224 30% 55%;
+
+    --accent: 163 100% 42%;
+    --accent-foreground: 228 60% 8%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 224 100% 97%;
+
+    --border: 228 20% 18%;
+    --input: 228 20% 18%;
+    --ring: 163 100% 42%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --glass: 228 45% 10%;
+    --glass-border: 228 20% 22%;
+    --teal-glow: 163 100% 42%;
+    --amber: 38 92% 50%;
+    --risk-low: 142 71% 45%;
+    --risk-medium: 38 92% 50%;
+    --risk-high: 217 91% 60%;
+
+    --sidebar-background: 228 45% 10%;
+    --sidebar-foreground: 224 100% 97%;
+    --sidebar-primary: 163 100% 42%;
+    --sidebar-primary-foreground: 228 60% 8%;
+    --sidebar-accent: 228 30% 16%;
+    --sidebar-accent-foreground: 224 100% 97%;
+    --sidebar-border: 228 20% 18%;
+    --sidebar-ring: 163 100% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-xl;
+  }
+
+  .glass-panel-strong {
+    @apply bg-card/80 backdrop-blur-2xl border border-border/60 rounded-xl;
+  }
+
+  .teal-gradient {
+    background: linear-gradient(135deg, hsl(163 100% 42%), hsl(180 80% 35%));
+  }
+
+  .teal-glow {
+    box-shadow: 0 0 30px -5px hsl(163 100% 42% / 0.3);
+  }
+
+  .count-up {
+    animation: countFadeIn 0.6s ease-out;
+  }
+
+  .widget-enter {
+    animation: widgetSlideIn 0.4s ease-out both;
+  }
+
+  /* List mode — light theme override */
+  .list-mode {
+    background: #f8fafc !important;
+    color: #1e293b !important;
+  }
+}
+
+[data-sonner-toast] {
+  cursor: pointer;
+}
+
+[data-sonner-toast] [data-icon] {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Success tick: foreground by default, app green on hover */
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] [data-icon] svg,
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] [data-icon] svg path {
+  color: hsl(var(--foreground)) !important;
+  fill: hsl(var(--foreground)) !important;
+  transition: color 0.15s ease, fill 0.15s ease;
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] [data-icon]:hover svg,
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] [data-icon]:hover svg path {
+  color: hsl(var(--primary)) !important;
+  fill: hsl(var(--primary)) !important;
+}
+
+@layer utilities {
+  @keyframes countFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes widgetSlideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-teal {
+    0%, 100% { box-shadow: 0 0 0 0 hsl(163 100% 42% / 0.4); }
+    50% { box-shadow: 0 0 0 8px hsl(163 100% 42% / 0); }
+  }
+}
