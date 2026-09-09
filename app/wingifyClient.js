@@ -1,5 +1,8 @@
 const { init } = require('wingify-fme-node-sdk');
 
+// TEMPORARY: send all SDK traffic to the VWO test host. Remove to restore edge.wingify.net.
+const WINGIFY_PROXY_URL = 'https://vwotestapp43.dev.visualwebsiteoptimizer.com';
+
 const clientCache = {};
 
 function cacheKey(accountId, sdkKey) {
@@ -22,6 +25,7 @@ async function getWingifyClient(accountId, sdkKey) {
     sdkKey,
     logger: { level: process.env.NODE_ENV === 'production' || process.env.VERCEL ? 'ERROR' : 'DEBUG' },
     pollInterval: process.env.VERCEL ? 0 : 10000,
+    proxyUrl: WINGIFY_PROXY_URL,
   });
 
   clientCache[key] = wingifyClient;
