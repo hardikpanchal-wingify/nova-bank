@@ -5,7 +5,7 @@
   "description": "Nova Bank — neobank demo with Express API and React UI on one server",
   "main": "app/server.js",
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "node --watch --watch-path=app/server.js --watch-path=app/wingifyClient.js --watch-path=app/launchCrypto.js --watch-path=app/launchSecret.js app/server.js",
