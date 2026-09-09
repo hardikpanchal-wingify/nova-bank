@@ -4,7 +4,7 @@ const http = require('http');
 const express = require('express');
 const cors = require('cors');
 
-const { getWingifyClient, clearClientCache } = require('./wingifyClient');
+const { getWingifyClient, clearClientCache, flushWingifyEvents } = require('./wingifyClient');
 const { decryptLaunchPayload } = require('./launchCrypto');
 
 const app = express();
@@ -115,6 +115,7 @@ app.get('/api/features', async (req, res) => {
       }
     }
 
+    await flushWingifyEvents(wingifyClient);
     return res.json({ dashboard, loan, meta: { user_id, user_type, environment } });
 
   } catch (err) {
@@ -151,6 +152,7 @@ app.post('/api/track', async (req, res) => {
     const userContext = buildUserContext(user_id, user_type);
 
     await wingifyClient.trackEvent(event_key, userContext);
+    await flushWingifyEvents(wingifyClient);
 
     return res.json({ success: true, event: event_key, user_id, environment });
 
@@ -217,6 +219,7 @@ app.post('/api/simulate', async (req, res) => {
       }
     }
 
+    await flushWingifyEvents(wingifyClient);
     return res.json({
       success: true,
       scenario,

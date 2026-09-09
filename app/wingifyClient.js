@@ -109,6 +109,9 @@ async function getWingifyClient(accountId, sdkKey) {
     sdkKey,
     logger: { level: process.env.NODE_ENV === 'production' || process.env.VERCEL ? 'ERROR' : 'DEBUG' },
     pollInterval: process.env.VERCEL ? 0 : 10000,
+    // Vercel freezes the isolate after the response; wait and send events now.
+    shouldWaitForTrackingCalls: Boolean(process.env.VERCEL),
+    isBatchingDisabled: Boolean(process.env.VERCEL),
   };
   if (proxy) initOptions.proxyUrl = proxy.url;
 
@@ -117,8 +120,17 @@ async function getWingifyClient(accountId, sdkKey) {
   return wingifyClient;
 }
 
+async function flushWingifyEvents(wingifyClient) {
+  if (!wingifyClient || typeof wingifyClient.flushEvents !== 'function') return;
+  try {
+    await wingifyClient.flushEvents();
+  } catch (err) {
+    console.error('[Wingify] flushEvents failed:', err.message);
+  }
+}
+
 function clearClientCache() {
   Object.keys(clientCache).forEach((k) => delete clientCache[k]);
 }
 
-module.exports = { getWingifyClient, clearClientCache };
+module.exports = { getWingifyClient, clearClientCache, flushWingifyEvents };
