@@ -23,7 +23,7 @@ Open the sample app from Wingify with an **AES-256-GCM** payload in the hash:
 
 `http://localhost:3001/#p=BASE64URL_PAYLOAD`
 
-Wingify encrypts `{ "accountId", "prod", "staging", "dev" }` with the same secret as `app/launchSecret.js` (`WINGIFY_LAUNCH_SECRET`). Layout: `base64url(iv[12] || ciphertext || authTag[16])`. Key is `SHA-256(secret)`. This app decrypts on the server, then clears the URL.
+Wingify encrypts `{ "accountId", "prod", "staging", "dev" }` with the same `WINGIFY_LAUNCH_SECRET` as this app (set in `.env` locally, not committed). Layout: `base64url(iv[12] || ciphertext || authTag[16])`. Key is `SHA-256(secret)`. This app decrypts on the server, then clears the URL.
 
 Generate a launch URL:
 
@@ -83,7 +83,7 @@ npx vercel --prod
 
 2. Leave Root Directory as the repo root. `vercel.json` already sets the build command (`npm run build`) and output directory (`app/dist`).
 
-3. Optional: in Vercel Project Settings → Environment Variables, set `WINGIFY_LAUNCH_SECRET` to the same value as Wingify (otherwise the default in `app/launchSecret.js` is used).
+3. In Vercel Project Settings → Environment Variables, set `WINGIFY_LAUNCH_SECRET` to the same value as Wingify. Do not commit this value.
 
 4. Open the app from Wingify with the **production origin**:
 

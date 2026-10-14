@@ -1,4 +1,5 @@
-// Shared with the Wingify sample-app launcher. Change this on both sides together.
-const WINGIFY_LAUNCH_SECRET = process.env.WINGIFY_LAUNCH_SECRET || "fe-sample-app-launch-v1";
+require('./loadEnv');
+
+const WINGIFY_LAUNCH_SECRET = String(process.env.WINGIFY_LAUNCH_SECRET || '').trim();
 
 module.exports = { WINGIFY_LAUNCH_SECRET };

@@ -8,7 +8,7 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "node --watch --watch-path=app/server.js --watch-path=app/wingifyClient.js --watch-path=app/launchCrypto.js --watch-path=app/launchSecret.js app/server.js",
+    "dev": "node --watch --watch-path=app/server.js --watch-path=app/wingifyClient.js --watch-path=app/launchCrypto.js --watch-path=app/launchSecret.js --watch-path=app/loadEnv.js app/server.js",
     "build": "vite build --config app/vite.config.mts",
     "start": "node app/server.js",
     "lint": "eslint --config app/eslint.config.mjs app",

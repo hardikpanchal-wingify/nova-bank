@@ -69,6 +69,10 @@ if (require.main === module) {
     staging: get("staging"),
     dev: get("dev"),
   };
+  if (!WINGIFY_LAUNCH_SECRET) {
+    console.error("WINGIFY_LAUNCH_SECRET is not set. Add it to .env or the environment.");
+    process.exit(1);
+  }
   if (!fields.accountId || !fields.prod || !fields.staging || !fields.dev) {
     console.error(
       "Usage: node app/launchCrypto.js --accountId ID --prod PROD_KEY --staging STAGING_KEY --dev DEV_KEY [--origin http://localhost:3001]"
