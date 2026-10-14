@@ -4,7 +4,7 @@ const http = require('http');
 const express = require('express');
 const cors = require('cors');
 
-const { getWingifyClient, clearClientCache, flushWingifyEvents } = require('./wingifyClient');
+const { getWingifyClient, clearClientCache, flushWingifyEvents, getProxyConfig } = require('./wingifyClient');
 const { decryptLaunchPayload } = require('./launchCrypto');
 
 const app = express();
@@ -240,9 +240,21 @@ app.post('/api/simulate', async (req, res) => {
 // Simple health check — confirms server + Wingify connectivity
 // ---------------------------------------------------------------------------
 app.get('/api/health', (req, res) => {
+  const proxy = getProxyConfig();
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
+    wingifyProxy: proxy
+      ? {
+          enabled: true,
+          url: proxy.url,
+          hostname: proxy.hostname,
+          ipPinned: Boolean(proxy.ip),
+        }
+      : {
+          enabled: false,
+          host: 'edge.wingify.net',
+        },
   });
 });
 

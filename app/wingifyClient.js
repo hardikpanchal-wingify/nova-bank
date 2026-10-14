@@ -108,4 +108,4 @@ function clearClientCache() {
   Object.keys(clientCache).forEach((k) => delete clientCache[k]);
 }
 
-module.exports = { getWingifyClient, clearClientCache, flushWingifyEvents };
+module.exports = { getWingifyClient, clearClientCache, flushWingifyEvents, getProxyConfig };
